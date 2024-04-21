@@ -1,23 +1,13 @@
-// var firebaseConfig = {
-//         apiKey: "AIzaSyDkaU5im4Hj7QsqQDFVkM3_kKyF1YGQI4Q",
-//         authDomain: "remo-e30b0.firebaseapp.com",
-//         databaseURL: "https://remo-e30b0.firebaseio.com",
-//         projectId: "remo-e30b0",
-//         storageBucket: "remo-e30b0.appspot.com",
-//         messagingSenderId: "318553256084",
-//         appId: "1:318553256084:web:955bfc1a10af2b009d4481"
-// };
 
-// firebase.initializeApp(firebaseConfig);
 
 var firebaseConfig = {
-    apiKey: "AIzaSyBz0YSeBST7Ud2k-Kla9GYj-yYqusLll3c",
-    authDomain: "removirtual-fa3b3.firebaseapp.com",
-    databaseURL: "https://removirtual-fa3b3.firebaseio.com",
-    projectId: "removirtual-fa3b3",
-    storageBucket: "removirtual-fa3b3.appspot.com",
-    messagingSenderId: "17916687649",
-    appId: "1:17916687649:web:efcbfc9b14ee5ddeafba60"
+            apiKey: "AIzaSyCYdeigPuvdKyVj0rG53IoUZHaVyawyVZY",
+    authDomain: "genzconnect-f5082.firebaseapp.com",
+    databaseURL: "https://genzconnect-f5082-default-rtdb.firebaseio.com",
+    projectId: "genzconnect-f5082",
+    storageBucket: "genzconnect-f5082.appspot.com",
+    messagingSenderId: "761396074376",
+    appId: "1:761396074376:web:ce2c9a3560a78194698c3d",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -79,7 +69,7 @@ function sendtointerviewee() {
         To: $("#P2email").val(),
         From: "work.dixitk941@gmail.com",
         Subject: "Interview Confirmation",
-        Body: "Hey " + $("#P2name").val() + " ,\r\r" + "Your interview has been scheduled on " + $("#date-time").val().split("T")[0] + " at " + $("#date-time").val().split("T")[1] + ". Join the room with the key - " + rand + "E" + "\n\n. Wish you the best.",
+        Body: "Hey " + $("#P2name").val() + "<br>" + "Your interview has been scheduled on " + $("#date-time").val().split("T")[0] + " at " + $("#date-time").val().split("T")[1] + "<br>." + "Visit the URL : https://genzconnect-f5082.web.app . Join the room with the key - " + rand + "E" + "<br>. Wish you the best.",
     })
 }
 
@@ -92,7 +82,7 @@ function sendtointerviewer() {
         To: $("#P1email").val(),
         From: "work.dixitk941@gmail.com",
         Subject: "Interview Confirmation",
-        Body: "You interview with " + $("#P2name").val() + " has been scheduled on " + $("#date-time").val().split("T")[0] + " at " + $("#date-time").val().split("T")[1] + ". Join the room with the key - " + rand + "R",
+        Body: "You interview with " + $("#P2name").val() + " has been scheduled on " + $("#date-time").val().split("T")[0] + " at " + $("#date-time").val().split("T")[1] + "." + "<br> Visit the URL : https://removirtual-fa3b3.web.app/pre-interview/index.html . Join the room with the key - " + rand + "R" + "<br> Please be present 10 minutes before the scheduled time ",
     })
 }
 
@@ -121,6 +111,19 @@ function sendtoremovirtual() {
     );
 }
 
+function sendreview() {
+    Email.send({
+
+        Host: "smtp.gmail.com",
+        Username: "work.dixitk941@gmail.com",
+        Password: "Maruti941@",
+        //To: $("#P1email").val(),
+        To: "dixitk941@gmail.com",
+        From: "work.dixitk941@gmail.com",
+        Subject: "Interview Confirmation",
+        Body: "hello",
+    })
+}
 
 //---- contact us -------
 

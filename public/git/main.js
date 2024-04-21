@@ -22,7 +22,7 @@ activityBtn.addEventListener("click", (e) => {
 });
 
 const headers = {
-     //OAuth app key
+        "Authorization": `Basic ${btoa(`89332edc85c0f082cb30:1fdec824f57a2c19291e8b5134492b280b2c4456`)}` //OAuth app key
 } 
 var path = []; //breadcrumbs path
 

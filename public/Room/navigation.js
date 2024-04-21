@@ -5,6 +5,7 @@ var chatDIV = document.getElementById("chatDIV");
 
 function openvideo() {
     close("gitDIV");
+    close("notesDIV");
     close("chatDIV");
     close("boardDIV");
     close("labDIV");
@@ -15,6 +16,7 @@ function openvideo() {
 function opengit() {
     close("boardDIV");
     close("chatDIV");
+    close("notesDIV");
     close("localVideo");
     small("remoteVideo");
     close("labDIV");
@@ -26,12 +28,30 @@ function openboard() {
     close("chatDIV");
     close("localVideo");
     small("remoteVideo");
+    close("notesDIV");
     close("labDIV");
     open("boardDIV");
     //var iframeID = document.getElementById("board");
     //$(iframeID).focus();
 }
-function openchat() {
+
+if (window.localStorage.getItem('interviewer') == 1){
+    var element = document.getElementById("Note");
+    element.style.display = "block";
+}
+
+function opennotes() {
+        close("gitDIV");
+        close("localVideo");
+        small("remoteVideo");
+        close("labDIV");
+        close("boardDIV");
+        close("chatDIV");
+        open("notesDIV");
+    
+    
+}
+    function openchat() {
     close("gitDIV");
     close("localVideo");
     small("remoteVideo");
@@ -39,6 +59,7 @@ function openchat() {
     close("boardDIV");
     open("chatDIV");
     //var iframeID = document.getElementById("board");
+    close("notesDIV");
     //$(iframeID).focus();
 }
 function openlab() {
@@ -47,6 +68,7 @@ function openlab() {
     small("remoteVideo");
     close("boardDIV");
     open("labDIV");
+    close("notesDIV");
     close("chatDIV");
     var iframeID = document.getElementById("lab");
     $(iframeID).focus();
