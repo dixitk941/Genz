@@ -16,27 +16,21 @@ var firebaseOrdersCollection = database.ref().child('Lab_details');
 async function launchlab(roomId) {
     var content;
     console.log("here, in the room");
-    
-    try {
-        content = await $.get("https://rightly-striking-peacock.ngrok-free.app");
-        
-        console.log(content.one);
-        console.log(content.two);
-        
-        var details = {
-            one: content.one,
-            two: content.two
-        };
-        
-        firebaseOrdersCollection.child(roomId).set(details); // Assuming you are using Firebase Realtime Database
-        
-        document.getElementById("lab").setAttribute("src", content.one);
-        
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
+    await $.get(
+        "rightly-striking-peacock.ngrok-free.app",
+        function(data) {
+            content = data;
+            console.log(content.one);
+            console.log(content.two);
+            var details = {
+                one: content.one,
+                two: content.two
+            };
+            firebaseOrdersCollection.child(roomId).set(details);
+        }
+    );
+    document.getElementById("lab").setAttribute("src", content.one);
 }
-
 
 
 function getlab(roomId) {

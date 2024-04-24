@@ -1,7 +1,7 @@
 
 
 var firebaseConfig = {
-            apiKey: "AIzaSyCYdeigPuvdKyVj0rG53IoUZHaVyawyVZY",
+    apiKey: "AIzaSyCYdeigPuvdKyVj0rG53IoUZHaVyawyVZY",
     authDomain: "genzconnect-f5082.firebaseapp.com",
     databaseURL: "https://genzconnect-f5082-default-rtdb.firebaseio.com",
     projectId: "genzconnect-f5082",

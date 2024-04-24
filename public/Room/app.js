@@ -5,6 +5,7 @@ const configuration = {
     iceCandidatePoolSize: 10,
 };
 
+
 let peerConnection = null;
 let localStream = null;
 let remoteStream = null;
@@ -71,11 +72,11 @@ async function makeRoom() {
     const roomId = urlParams.get("key");
     // roomId = window.localStorage.getItem('roomId')
     console.log(roomId);
-    var boardLink = "https://real-timeboard-remo.herokuapp.com/?key=" + roomId;
+    var boardLink = "https://genz-whiteboard.vercel.app/?key=" + roomId;
     document.getElementById("board").setAttribute("src", boardLink);
     console.log(boardLink);
     name = window.localStorage.getItem('name');
-    var chatLink = "https://chat-at-remo.herokuapp.com/?key=" + roomId + "&name=" + name;
+    var chatLink = "https://genz-chat-six.vercel.app/?key=" + roomId + "&name=" + name;
     document.getElementById("chat").setAttribute("src", chatLink);
     console.log(chatLink);
     db = firebase.firestore();
@@ -93,88 +94,62 @@ async function makeRoom() {
 
 
 async function createRoomById() {
-    const db = firebase.firestore();
+    // Inside createRoomById function
+const offer = await peerConnection.createOffer();
+await peerConnection.setLocalDescription(offer);
 
-    console.log("Create PeerConnection with configuration: ", configuration);
-    peerConnection = new RTCPeerConnection(configuration);
+socket.emit('offer', {
+    roomId: roomId,
+    offer: {
+        type: offer.type,
+        sdp: offer.sdp
+    }
+});
 
-    registerPeerConnectionListeners();
-
-    // Add code for creating a room here
-    // Code for creating room above
-
-    localStream.getTracks().forEach((track) => {
-        peerConnection.addTrack(track, localStream);
-    });
-
-    // Code for creating a room below
-    const offer = await peerConnection.createOffer();
-    await peerConnection.setLocalDescription(offer);
-
-    const roomWithOffer = {
-        offer: {
-            type: offer.type,
-            sdp: offer.sdp,
-        },
-    };
-    const querystring = window.location.search;
-    console.log(querystring);
-
-    const urlParams = new URLSearchParams(querystring);
-
-    const roomId = urlParams.get("key");
-    launchlab(roomId);
-    const roomRef = await db.collection("rooms").doc(roomId);
-
-    roomRef.set(roomWithOffer);
-
-    // Code for creating a room above
-
-    // Code for collecting ICE candidates below
-    const callerCandidatesCollection = roomRef.collection("callerCandidates");
-    peerConnection.addEventListener("icecandidate", (event) => {
-        if (!event.candidate) {
-            console.log("Got final candidate!");
-            return;
-        }
-        console.log("Got candidate: ", event.candidate);
-        callerCandidatesCollection.add(event.candidate.toJSON());
-    });
-
-    // Code for collecting ICE candidates above
-
-    peerConnection.addEventListener("track", (event) => {
-        console.log("Got remote track:", event.streams[0]);
-        event.streams[0].getTracks().forEach((track) => {
-            console.log("Add a track to the remoteStream:", track);
-            remoteStream.addTrack(track);
-        });
-    });
-
-    // Listening for remote session description below
-    roomRef.onSnapshot(async(snapshot) => {
-        const data = snapshot.data();
-        if (!peerConnection.currentRemoteDescription && data && data.answer) {
-            console.log("Got remote description: ", data.answer);
-            const rtcSessionDescription = new RTCSessionDescription(data.answer);
-            await peerConnection.setRemoteDescription(rtcSessionDescription);
-        }
-    });
-    // Listening for remote session description above
-
-    // Listen for remote ICE candidates below
-    roomRef.collection("calleeCandidates").onSnapshot((snapshot) => {
-        snapshot.docChanges().forEach(async(change) => {
-            if (change.type === "added") {
-                let data = change.doc.data();
-                console.log(`Got new remote ICE candidate: ${JSON.stringify(data)}`);
-                await peerConnection.addIceCandidate(new RTCIceCandidate(data));
+// Inside joinRoomById function
+socket.on('offer', async (data) => {
+    if (data.roomId === roomId) {
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(data.offer));
+        
+        const answer = await peerConnection.createAnswer();
+        await peerConnection.setLocalDescription(answer);
+        
+        socket.emit('answer', {
+            roomId: roomId,
+            answer: {
+                type: answer.type,
+                sdp: answer.sdp
             }
         });
-    });
-    // Listen for remote ICE candidates above
+    }
+});
 
-    return roomId;
+socket.emit('answer', {
+    roomId: roomId,
+    answer: {
+        type: answer.type,
+        sdp: answer.sdp
+    }
+});
+
+socket.on('answer', async (data) => {
+    if (data.roomId === roomId) {
+        await peerConnection.setRemoteDescription(new RTCSessionDescription(data.answer));
+    }
+});
+
+// Inside icecandidate event listener
+socket.emit('icecandidate', {
+    roomId: roomId,
+    candidate: event.candidate.toJSON()
+});
+
+socket.on('icecandidate', async (data) => {
+    if (data.roomId === roomId) {
+        await peerConnection.addIceCandidate(new RTCIceCandidate(data.candidate));
+    }
+});
+
 }
 
 async function joinRoomById(roomId) {
@@ -291,20 +266,7 @@ function toggleMic() {
         .enabled;
 }
 
-/*function sendreview() {
-    Email.send({
 
-        Host: "smtp.gmail.com",
-        Username: "removirtual@gmail.com",
-        Password: "removirtual123$",
-        //To: $("#P1email").val(),
-        To: "namyalg@gmail.com",
-        From: "removirtual@gmail.com",
-        Subject: "Interview Confirmation",
-        Body: "hello",
-    })
-}
-*/
 function se(){
     if (window.localStorage.getItem('interviewer') == 1){
        sendreview();
@@ -316,10 +278,10 @@ function sendreview() {
     Email.send({
 
         Host: "smtp.gmail.com",
-        Username: "removirtual@gmail.com",
-        Password: "removirtual123$",
-        To: "namyalg@gmail.com",
-        From: "removirtual@gmail.com",
+        Username: "work.dixitk941@gmail.com",
+        Password: "Maruti941@",
+        To: "dixitk941@gmail.com",
+        From: "work.dixitk941@gmail.com",
         Subject: "Interview Report",
         Body : report,
     })
