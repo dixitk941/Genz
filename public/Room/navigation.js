@@ -63,16 +63,19 @@ function opennotes() {
     //$(iframeID).focus();
 }
 function openlab() {
+    // Close unnecessary elements
     close("gitDIV");
     close("localVideo");
     small("remoteVideo");
     close("boardDIV");
-    open("labDIV");
     close("notesDIV");
     close("chatDIV");
-    var iframeID = document.getElementById("lab");
-    $(iframeID).focus();
+
+    // Open the lab in Gitpod
+    window.location.href = "https://gitpod.io/#https://github.com/dixitk941/gitpod";
 }
+
+
 
 function opensettings() {
     document.getElementById("setting").classList.toggle("d-none");
