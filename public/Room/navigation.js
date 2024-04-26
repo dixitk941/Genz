@@ -5,7 +5,6 @@ var chatDIV = document.getElementById("chatDIV");
 
 function openvideo() {
     close("gitDIV");
-    close("notesDIV");
     close("chatDIV");
     close("boardDIV");
     close("labDIV");
@@ -16,7 +15,6 @@ function openvideo() {
 function opengit() {
     close("boardDIV");
     close("chatDIV");
-    close("notesDIV");
     close("localVideo");
     small("remoteVideo");
     close("labDIV");
@@ -28,30 +26,12 @@ function openboard() {
     close("chatDIV");
     close("localVideo");
     small("remoteVideo");
-    close("notesDIV");
     close("labDIV");
     open("boardDIV");
     //var iframeID = document.getElementById("board");
     //$(iframeID).focus();
 }
-
-if (window.localStorage.getItem('interviewer') == 1){
-    var element = document.getElementById("Note");
-    element.style.display = "block";
-}
-
-function opennotes() {
-        close("gitDIV");
-        close("localVideo");
-        small("remoteVideo");
-        close("labDIV");
-        close("boardDIV");
-        close("chatDIV");
-        open("notesDIV");
-    
-    
-}
-    function openchat() {
+function openchat() {
     close("gitDIV");
     close("localVideo");
     small("remoteVideo");
@@ -59,7 +39,6 @@ function opennotes() {
     close("boardDIV");
     open("chatDIV");
     //var iframeID = document.getElementById("board");
-    close("notesDIV");
     //$(iframeID).focus();
 }
 function openlab() {
@@ -74,7 +53,6 @@ function openlab() {
     // Open the lab in Gitpod
     window.location.href = "https://gitpod.io/#https://github.com/dixitk941/gitpod";
 }
-
 
 
 function opensettings() {
