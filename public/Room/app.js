@@ -71,7 +71,7 @@ async function makeRoom() {
     const roomId = urlParams.get("key");
     // roomId = window.localStorage.getItem('roomId')
     console.log(roomId);
-    var boardLink = "https://genz-whiteboard.vercel.app/?key=" + roomId;
+    var boardLink = "https://genz-whiteboard.vercel.app/??key=" + roomId;
     document.getElementById("board").setAttribute("src", boardLink);
     console.log(boardLink);
     name = window.localStorage.getItem('name');
@@ -291,7 +291,20 @@ function toggleMic() {
         .enabled;
 }
 
+/*function sendreview() {
+    Email.send({
 
+        Host: "smtp.gmail.com",
+        Username: "removirtual@gmail.com",
+        Password: "removirtual123$",
+        //To: $("#P1email").val(),
+        To: "namyalg@gmail.com",
+        From: "removirtual@gmail.com",
+        Subject: "Interview Confirmation",
+        Body: "hello",
+    })
+}
+*/
 function se(){
     if (window.localStorage.getItem('interviewer') == 1){
        sendreview();
@@ -303,10 +316,10 @@ function sendreview() {
     Email.send({
 
         Host: "smtp.gmail.com",
-        Username: "work.dixitk941@gmail.com",
-        Password: "Maruti941@",
-        To: "dixitk941@gmail.com",
-        From: "work.dixitk941@gmail.com",
+        Username: "removirtual@gmail.com",
+        Password: "removirtual123$",
+        To: "namyalg@gmail.com",
+        From: "removirtual@gmail.com",
         Subject: "Interview Report",
         Body : report,
     })
